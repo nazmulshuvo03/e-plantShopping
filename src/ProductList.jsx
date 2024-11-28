@@ -293,8 +293,10 @@ function ProductList() {
     setShowCart(false);
   };
   const handleAddToCart = (item) => {
-    dispatch(addItem(item));
-    setAddedToCart((prev) => ({ ...prev, [item.name]: true }));
+    if (!addedToCart[item.name]) {
+      dispatch(addItem(item));
+      setAddedToCart((prev) => ({ ...prev, [item.name]: true }));
+    }
   };
   return (
     <div>
@@ -396,7 +398,10 @@ function ProductList() {
           })}
         </div>
       ) : (
-        <CartItem onContinueShopping={handleContinueShopping} />
+        <CartItem
+          onContinueShopping={handleContinueShopping}
+          setAddedToCart={setAddedToCart}
+        />
       )}
     </div>
   );
